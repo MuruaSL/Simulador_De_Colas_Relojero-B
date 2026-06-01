@@ -471,7 +471,8 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
 # AGREGAR ULTIMA FILA
 # =========================================================
 
-filas_mostradas.append(fila_vector)
+if len(filas_mostradas) == 0 or filas_mostradas[-1] != fila_vector:
+    filas_mostradas.append(fila_vector)
 
 # =========================================================
 # ANALISIS FINAL
