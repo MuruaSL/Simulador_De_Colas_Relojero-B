@@ -103,11 +103,13 @@ class Simulacion(object):
             self.tiempo_tomar_cafe = tiempo
 
     def definirCondicionInicial():
-        
+        #TODO
+        pass
 
     def iniciar_simulacion(self):
         for i in range(self.iteraciones_simulacion):
             tiempo_actual = 0
+            definirCondicionInicial()
             while tiempo_actual < self.tiempo_simulacion:
                 
                 pass
