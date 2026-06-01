@@ -104,7 +104,7 @@ cola_reparacion = []
 # VARIABLES DEL SISTEMA
 # =========================================================
 
-relojes_reparados = 0
+relojes_reparados = 3
 
 cliente_actual = None
 
