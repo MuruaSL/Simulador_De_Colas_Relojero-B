@@ -1,0 +1,20 @@
+=== STDOUT ===
+Ingrese maximo iteraciones: Ingrese tiempo simulacion: Mostrar desde fila: Cantidad filas a mostrar: 
+====================================
+RESULTADOS FINALES
+====================================
+
+Tiempo simulado: 660076.14
+
+Probabilidad retiro fallido: 0.1675
+
+Ocupacion ayudante: 0.3509
+
+Ocupacion relojero: 0.3318
+
+Promedio cafes por dia: 0.781
+
+Excel generado correctamente.
+
+
+=== STDERR ===

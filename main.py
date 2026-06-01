@@ -6,7 +6,9 @@
 import random
 import math
 import pandas as pd
+import os
 
+os.makedirs("resultados", exist_ok=True)
 # =========================================================
 # FUNCIONES RANDOM
 # =========================================================
@@ -65,8 +67,8 @@ cantidad_mostrar = int(
 
 # FILAS A MOSTRAR
 
-mostrar_desde = 0
-cantidad_mostrar = 300
+# mostrar_desde = 0
+# cantidad_mostrar = 300
 
 # =========================================================
 # VARIABLES DE SIMULACION
@@ -550,6 +552,8 @@ print(
 
 df = pd.DataFrame(filas_mostradas)
 
-df.to_excel("simulacion.xlsx", index=False)
-
+df.to_excel(
+    "resultados/simulacion.xlsx",
+    index=False
+)
 print("\nExcel generado correctamente.")
