@@ -74,7 +74,7 @@ cantidad_mostrar = int(
 # VARIABLES DE SIMULACION
 # =========================================================
 
-fila = 0
+fila = 1
 reloj = 0
 
 # =========================================================
@@ -129,12 +129,51 @@ rnd_tipo = "-"
 rnd_atencion = "-"
 rnd_reparacion = "-"
 rnd_cafe = "-"
+tiempo_entre_llegadas_mostrar = "-"
+tipo_cliente_mostrar = "-"
 
+tiempo_atencion_mostrar = "-"
+tiempo_reparacion_mostrar = "-"
+
+decision_cafe_mostrar = "-"
 # =========================================================
 # LISTA DE FILAS MOSTRADAS
 # =========================================================
 
 filas_mostradas = []
+fila_inicial = {
+    "Fila": 0,
+    "Reloj": 0,
+    "Evento": "Inicializacion",
+    "RND Llegada": "-",
+    "Tiempo Entre Llegadas": "-",
+    "RND Tipo": "-",
+    "Tipo Cliente": "-",
+    "RND Atencion": "-",
+    "Tiempo Atencion": "-",
+    "RND Reparacion": "-",
+    "Tiempo Reparacion": "-",
+    "RND Cafe": "-",
+    "Decision Cafe": "-",
+    "Estado Ayudante": "Libre",
+    "Estado Relojero": "Libre",
+    "Cliente Actual": "-",
+    "Cola Ayudante": 0,
+    "Cola Reparacion": 0,
+    "Relojes Reparados": 3,
+    "Prox Llegada": "-",
+    "Fin Atencion": "-",
+    "Fin Reparacion": "-",
+    "Fin Cafe": "-",
+    "Ac Ocup Ayudante": 0,
+    "Ac Ocup Relojero": 0,
+    "Cont Retiros": 0,
+    "Cont Retiros Fallidos": 0,
+    "Cont Cafes": 0
+}
+
+if mostrar_desde == 0:
+    filas_mostradas.append(fila_inicial)
 
 # =========================================================
 # PRIMERA LLEGADA
@@ -142,7 +181,54 @@ filas_mostradas = []
 
 rnd_llegada, tiempo_entre_llegadas = uniforme(13, 17)
 
+tiempo_entre_llegadas_mostrar = tiempo_entre_llegadas
+
 prox_llegada = reloj + tiempo_entre_llegadas
+
+fila_inicial = {
+
+    "Fila": 0,
+    "Reloj": 0,
+    "Evento": "Inicializacion",
+
+    "RND Llegada": rnd_llegada,
+    "Tiempo Entre Llegadas": tiempo_entre_llegadas,
+
+    "RND Tipo": "-",
+    "Tipo Cliente": "-",
+
+    "RND Atencion": "-",
+    "Tiempo Atencion": "-",
+
+    "RND Reparacion": "-",
+    "Tiempo Reparacion": "-",
+
+    "RND Cafe": "-",
+    "Decision Cafe": "-",
+
+    "Estado Ayudante": estado_ayudante,
+    "Estado Relojero": estado_relojero,
+
+    "Cliente Actual": "-",
+
+    "Cola Ayudante": 0,
+    "Cola Reparacion": 0,
+
+    "Relojes Reparados": relojes_reparados,
+
+    "Prox Llegada": round(prox_llegada, 2),
+
+    "Fin Atencion": "-",
+    "Fin Reparacion": "-",
+    "Fin Cafe": "-",
+
+    "Ac Ocup Ayudante": 0,
+    "Ac Ocup Relojero": 0,
+
+    "Cont Retiros": 0,
+    "Cont Retiros Fallidos": 0,
+    "Cont Cafes": 0
+}
 
 # =========================================================
 # FUNCION AUXILIAR
@@ -153,10 +239,13 @@ def iniciar_reparacion():
     global estado_relojero
     global prox_fin_reparacion
     global rnd_reparacion
+    global tiempo_reparacion_mostrar
 
     estado_relojero = "Ocupado"
 
     rnd_reparacion, tiempo_reparacion = uniforme(18, 22)
+
+    tiempo_reparacion_mostrar = tiempo_reparacion
 
     prox_fin_reparacion = reloj + tiempo_reparacion
 
@@ -204,6 +293,14 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
     rnd_reparacion = "-"
     rnd_cafe = "-"
 
+    tiempo_entre_llegadas_mostrar = "-"
+    tipo_cliente_mostrar = "-"
+
+    tiempo_atencion_mostrar = "-"
+    tiempo_reparacion_mostrar = "-"
+
+    decision_cafe_mostrar = "-"
+
     # =====================================================
     # EVENTO: LLEGADA CLIENTE
     # =====================================================
@@ -216,6 +313,8 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
 
         rnd_llegada, tiempo_entre_llegadas = uniforme(13, 17)
 
+        tiempo_entre_llegadas_mostrar = tiempo_entre_llegadas
+
         prox_llegada = reloj + tiempo_entre_llegadas
 
         # -----------------------------------------
@@ -223,6 +322,8 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
         # -----------------------------------------
 
         rnd_tipo, tipo_cliente = generar_tipo_cliente()
+
+        tipo_cliente_mostrar = tipo_cliente
 
         # -----------------------------------------
         # AYUDANTE LIBRE
@@ -242,9 +343,12 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
 
                 rnd_atencion, tiempo_atencion = uniforme(6, 10)
 
+                tiempo_atencion_mostrar = tiempo_atencion
+
             else:
 
                 tiempo_atencion = 3
+                tiempo_atencion_mostrar = 3
 
             prox_fin_atencion = reloj + tiempo_atencion
 
@@ -303,10 +407,12 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
             if siguiente_cliente == "Compra":
 
                 rnd_atencion, tiempo_atencion = uniforme(6, 10)
+                tiempo_atencion_mostrar = tiempo_atencion
 
             else:
 
                 tiempo_atencion = 3
+                tiempo_atencion_mostrar = 3
 
             prox_fin_atencion = reloj + tiempo_atencion
 
@@ -333,6 +439,10 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
         # -----------------------------------------
 
         rnd_cafe, toma_cafe = decidir_cafe()
+        if toma_cafe:
+            decision_cafe_mostrar = "Toma Cafe"
+        else:
+            decision_cafe_mostrar = "No Toma Cafe"
 
         if toma_cafe:
 
@@ -389,10 +499,19 @@ while reloj < tiempo_simulacion and fila < max_iteraciones:
         # =========================================
 
         "RND Llegada": rnd_llegada,
+        "Tiempo Entre Llegadas": tiempo_entre_llegadas_mostrar,
+
         "RND Tipo": rnd_tipo,
+        "Tipo Cliente": tipo_cliente_mostrar,
+
         "RND Atencion": rnd_atencion,
+        "Tiempo Atencion": tiempo_atencion_mostrar,
+
         "RND Reparacion": rnd_reparacion,
+        "Tiempo Reparacion": tiempo_reparacion_mostrar,
+
         "RND Cafe": rnd_cafe,
+        "Decision Cafe": decision_cafe_mostrar,
 
         # =========================================
         # ESTADOS
